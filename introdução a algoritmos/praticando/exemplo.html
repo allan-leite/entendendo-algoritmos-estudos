@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de médias</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./main.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <img src="./images/logo.png" alt="capelo e diploma">
+            <h1>Calculadora de médias</h1>
+        </header>
+        <form id="form-atividade">
+            <input type="number" id="nota-minima" required placeholder="Qual a nota minima?">
+            <input type="text" id="nome-atividade" required placeholder="Nome da atividade">
+            <input type="number" id="nota-atividade" required placeholder="Nota da atividade" min="0" max="10">
+            <button type="submit">Adicionar +</button>
+        </form>
+        <table cellspacing="0">
+            <thead>
+                <tr>
+                    <th>
+                        Nome da atividade
+                    </th>
+                    <th>Nota da atividade</th>
+                    <th>Aprovado?</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td>Média final</td>
+                    <td id="media-final-valor">---</td>
+                    <td id="media-final-resultado">---</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <script>
+        const form = document.getElementById('form-atividade');
+        const imgAprovado = '<img src="./images/aprovado.png" alt"Emoji celebrando" />'
+        const imgReprovado = '<img src="./images/reprovado.png" alt"Emoji decepcionado" />'
+        const atividades = [];
+        const notas = [];
+        const spanAprovado = '<span class="resultado aprovado">Aprovado</span>'
+        const spanReprovado = '<span class="resultado reprovado">Reprovado</span>'
+        const notaMinima = document.getElementById('nota-minima')
+        
+        
+
+        let linhas = '';
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            adicionaLinha();
+            atualizaTabela();
+            atualizaMediaFinal();
+            calculaMediaFinal();
+        });
+
+        function adicionaLinha() {
+            
+            const inputNomeAtividade = document.getElementById('nome-atividade');
+            const inputNotaAtividade = document.getElementById('nota-atividade');
+
+            if (atividades.includes(inputNomeAtividade.value)) {
+                alert(`A atividade ${inputNomeAtividade.value} já foi inserida`)
+            } else {
+                atividades.push(inputNomeAtividade.value);
+                notas.push(parseFloat(inputNotaAtividade.value));
+
+                let linha = '<tr>';
+                linha += `<td>${inputNomeAtividade.value}</td>`;
+                linha += `<td>${inputNotaAtividade.value}</td>`;
+                linha += `<td>${inputNotaAtividade.value >= parseFloat(notaMinima.value) ? 'aprovado' : 'reprovado'}</td>`;
+                linha += '</tr>';
+
+                linhas += linha;
+            }
+
+            inputNomeAtividade.value = '';
+            inputNotaAtividade.value = '';
+        }
+
+        function atualizaTabela() {
+            const corpoTabela = document.querySelector('tbody');
+            corpoTabela.innerHTML = linhas;
+        }
+
+        function atualizaMediaFinal() {
+            const mediaFinal = calculaMediaFinal();
+
+            document.getElementById('media-final-valor').innerHTML = mediaFinal.toFixed(2);
+            document.getElementById('media-final-resultado').innerHTML = mediaFinal >= notaMinima.value ? spanAprovado : spanReprovado;
+        }
+
+        function calculaMediaFinal() {
+            let somaDasNotas = 0;
+
+            for (let i = 0; i < notas.length; i++) {
+                somaDasNotas += notas[i];
+            }
+
+            return somaDasNotas / notas.length;
+        }
+    </script>
+</body>
+
+</html>

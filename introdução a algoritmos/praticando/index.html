@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bucando aluno</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Algoritmo de busca binaria</h1>
+        <div class="formularios">
+            <div>
+                <form id="formulario-add-num">
+                    <input type="number" id="numeros" required placeholder="Digite um numero">
+                    <button type="submit" id="btn-enviar">enviar</button>
+                </form>
+                <form id="formulario-busca-num">
+                    <input type="number" id="busca-numero" required placeholder="Qual numero buscar?">
+                    <button type="submit" id="btn-buscar">buscar</button>
+                </form>
+            </div>
+        </div>
+        
+        <div>
+            <ul class="lista-de-numeros">
+            </ul>
+        </div>
+        <div class="resultado-busca">
+            <p>O numero que voce buscou foi o xº a ser digitado</p>
+            <p>voce ainda não digitou esse numero</p>
+        </div>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>
